@@ -1,7 +1,6 @@
 name: CD
 
 on:
-  pull_request:
   push:
     tags:
       - "v*"
@@ -114,54 +113,54 @@ jobs:
           name: wheels-${{ matrix.os }}-${{ matrix.version }}
           path: wheelhouse/*.whl
 
-  # release-pypi:
-  #   name: Release to PyPI
-  #   needs: build_wheels
-  #   runs-on: ubuntu-latest
+  release-pypi:
+    name: Release to PyPI
+    needs: build_wheels
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         submodules: true
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
 
-  #     - name: Switch to Current Branch
-  #       run: git checkout ${{ env.BRANCH }}
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
 
-  #     - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
 
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: artifact
-  #         path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
 
-  #     - name: Publish to PyPI
-  #       uses: pypa/gh-action-pypi-publish@v1.6.4
-  #       with:
-  #         password: ${{ secrets.PYPI_TOKEN }}
-  #         verbose: true
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.6.4
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+          verbose: true
 
-  # release-github:
-  #   name: Release to GitHub
-  #   needs: build_wheels
-  #   runs-on: ubuntu-latest
+  release-github:
+    name: Release to GitHub
+    needs: build_wheels
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         submodules: true
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
 
-  #     - name: Switch to Current Branch
-  #       run: git checkout ${{ env.BRANCH }}
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
 
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: artifact
-  #         path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
 
-  #     - name: Release Tagged Version
-  #       uses: "marvinpinto/action-automatic-releases@latest"
-  #       with:
-  #         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-  #         prerelease: false
-  #         files: |
-  #           dist/**
+      - name: Release Tagged Version
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            dist/**
