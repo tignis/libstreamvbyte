@@ -26,9 +26,9 @@ jobs:
           python-version: "3.10.4"
 
       - name: Setup Poetry
-        uses: Gr1N/setup-poetry@v7
+        uses: abatilo/actions-poetry@v3
         with:
-          poetry-version: 1.2.2
+          poetry-version: 1.8.2
 
       - name: Install Dependencies
         run: |
@@ -64,7 +64,7 @@ jobs:
       - uses: pguyot/arm-runner-action@v2.5.2
         with:
           image_additional_mb: 4096
-          base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv8-Bullseye.7z
+          base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv8-Bullseye.img.xz
           cpu: cortex-a53
           commands: |
             apt-get update -qq -y
